@@ -20,11 +20,9 @@ const DEFAULT_SAVE = {
 };
 
 export function loadSave() {
-
-    const save = localStorage.getItem(SAVE_KEY);
+    let save = localStorage.getItem(SAVE_KEY);
 
     if (!save) {
-
         localStorage.setItem(
             SAVE_KEY,
             JSON.stringify(DEFAULT_SAVE)
@@ -37,7 +35,6 @@ export function loadSave() {
 }
 
 export function saveGame(data) {
-
     localStorage.setItem(
         SAVE_KEY,
         JSON.stringify(data)
@@ -45,9 +42,33 @@ export function saveGame(data) {
 }
 
 export function resetSave() {
+    localStorage.removeItem(SAVE_KEY);
+}
 
-    localStorage.setItem(
-        SAVE_KEY,
-        JSON.stringify(DEFAULT_SAVE)
-    );
+export function completeLevel(level) {
+    const save = loadSave();
+
+    save.completedLevels[level - 1] = true;
+
+    saveGame(save);
+}
+
+export function completeDifficulty(difficulty) {
+    const save = loadSave();
+
+    save.difficultiesCompleted[difficulty] = true;
+
+    if (
+        difficulty === "normal" ||
+        difficulty === "hard" ||
+        difficulty === "nightmare"
+    ) {
+        save.hardcoreUnlocked = true;
+    }
+
+    saveGame(save);
+}
+
+export function isHardcoreUnlocked() {
+    return loadSave().hardcoreUnlocked;
 }
