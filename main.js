@@ -1,5 +1,16 @@
 import * as THREE from "three";
 
+import {
+    loadSave,
+    completeLevel,
+    completeDifficulty,
+    isHardcoreUnlocked
+} from "./save.js";
+
+const saveData = loadSave();
+
+console.log("Save Loaded:", saveData);
+
 const canvas = document.getElementById("game");
 
 const scene = new THREE.Scene();
@@ -43,11 +54,49 @@ const cell = new THREE.Mesh(
 
 scene.add(cell);
 
-function animate() {
+const hardcoreButton =
+    document.getElementById("hardcoreBtn");
 
+if (isHardcoreUnlocked()) {
+    hardcoreButton.disabled = false;
+    hardcoreButton.textContent = "Hardcore";
+}
+
+window.devUnlockHardcore = () => {
+    completeDifficulty("normal");
+
+    location.reload();
+};
+
+window.devCompleteLevel1 = () => {
+    completeLevel(1);
+
+    location.reload();
+};
+
+function animate() {
     requestAnimationFrame(animate);
 
-    renderer.render(scene, camera);
+    renderer.render(
+        scene,
+        camera
+    );
 }
 
 animate();
+
+window.addEventListener(
+    "resize",
+    () => {
+        camera.aspect =
+            window.innerWidth /
+            window.innerHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+    }
+);
