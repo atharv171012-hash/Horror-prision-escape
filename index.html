@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monster Prison Escape</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.169.0/build/three.module.js"
+        }
+    }
+    </script>
+</head>
+
+<body>
+
+    <div id="menu">
+        <h1>MONSTER PRISON ESCAPE</h1>
+
+        <button id="playBtn">Play</button>
+        <button id="difficultyBtn">Difficulty</button>
+    </div>
+
+    <div id="difficultyMenu" class="hidden">
+
+        <h2>Difficulty</h2>
+
+        <button data-diff="peaceful">Peaceful</button>
+        <button data-diff="easy">Easy</button>
+        <button data-diff="normal">Normal</button>
+        <button data-diff="hard">Hard</button>
+        <button data-diff="nightmare">Nightmare</button>
+
+        <button id="hardcoreBtn" disabled>
+            Hardcore (Locked)
+        </button>
+
+    </div>
+
+    <canvas id="game"></canvas>
+
+    <script type="module" src="main.js"></script>
+
+</body>
+</html>
